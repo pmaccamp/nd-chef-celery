@@ -50,7 +50,7 @@ define :celery_mon, :enable => true, :virtualenv => false, :startsecs => 10, :dj
       action :install
     end
 
-    supervisord_program "celerymon-#{params[:name]}" do
+    program "celerymon-#{params[:name]}" do
       command celery_command
       directory params[:directory]
       autostart true
