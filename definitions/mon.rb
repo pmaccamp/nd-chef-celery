@@ -50,37 +50,37 @@ define :celery_mon, :enable => true, :virtualenv => false, :startsecs => 10, :dj
         action :install
       end
 
-      chef-supervisord_program "celerymon-#{params[:name]}" do
-      command celery_command
-      directory params[:directory]
-      autostart true
-      autorestart "true"
-      user params[:user] if params[:user]
-      stdout_logfile params[:logfile]
-      stderr_logfile params[:logfile]
-      startsecs params[:startsecs]
-      stopwaitsecs params[:stopwaitsecs]
-      numprocs 1
-      priority 999
-      action :supervise
+      chef_supervisord_program "celerymon-#{params[:name]}" do
+        command celery_command
+        directory params[:directory]
+        autostart true
+        autorestart "true"
+        user params[:user] if params[:user]
+        stdout_logfile params[:logfile]
+        stderr_logfile params[:logfile]
+        startsecs params[:startsecs]
+        stopwaitsecs params[:stopwaitsecs]
+        numprocs 1
+        priority 999
+        action :supervise
+      end
+
+      # supervisord should automatically start the service, but we want a service
+      # resource declared so that it will be possible to restart the celery service
+      # from inside another recipe
+
+      service "celerymon-#{params[:name]}" do
+        provider Chef::Provider::Service::Simple
+        supports :start => true, :stop => true, :restart => true, :status => true
+        start_command "supervisorctl start celerymon-#{params[:name]}"
+        stop_command "supervisorctl stop celerymon-#{params[:name]}"
+        restart_command "supervisorctl restart celerymon-#{params[:name]}"
+        status_command "supervisorctl status celerymon-#{params[:name]}"
+        action :nothing
+      end
+
+    when false
+      Chef::Log.fatal("celery: the celery definition does not currently support disable action")
   end
-
-  # supervisord should automatically start the service, but we want a service
-  # resource declared so that it will be possible to restart the celery service
-  # from inside another recipe
-
-  service "celerymon-#{params[:name]}" do
-    provider Chef::Provider::Service::Simple
-    supports :start => true, :stop => true, :restart => true, :status => true
-    start_command "supervisorctl start celerymon-#{params[:name]}"
-    stop_command "supervisorctl stop celerymon-#{params[:name]}"
-    restart_command "supervisorctl restart celerymon-#{params[:name]}"
-    status_command "supervisorctl status celerymon-#{params[:name]}"
-    action :nothing
-  end
-
-  when false
-  Chef::Log.fatal("celery: the celery definition does not currently support disable action")
-end
 
 end
