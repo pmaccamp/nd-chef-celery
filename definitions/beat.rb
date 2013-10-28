@@ -3,7 +3,7 @@ define :celery_beat, :enable => true, :virtualenv => false, :startsecs => 10, :d
   case params[:enable]
   when true
     include_recipe 'python'
-    include_recipe 'supervisord'
+    include_recipe 'chef-supervisord'
 
     celery_command = String.new
 
