@@ -58,7 +58,7 @@ define :celery_cam, :enable => true, :virtualenv => false, :startsecs => 10, :dj
       action :install
     end
 
-    supervisord_program "celerycam-#{params[:name]}" do
+    program "celerycam-#{params[:name]}" do
       command celery_command
       directory params[:directory]
       autostart true
