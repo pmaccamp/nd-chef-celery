@@ -52,7 +52,7 @@ define :celery_worker, :enable => true, :virtualenv => false, :startsecs => 10, 
 
     Chef::Log.debug("celery_worker: generated celery_command as: " + celery_command.inspect)
 
-    supervisord_program "celeryd-#{params[:name]}" do
+    program "celeryd-#{params[:name]}" do
       command celery_command
       directory params[:directory]
       autostart true
