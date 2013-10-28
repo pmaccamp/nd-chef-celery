@@ -58,7 +58,7 @@ define :celery_beat, :enable => true, :virtualenv => false, :startsecs => 10, :d
       action :install
     end
 
-    supervisord_program "celerybeat-#{params[:name]}" do
+    program "celerybeat-#{params[:name]}" do
       command celery_command
       directory params[:directory]
       autostart true
