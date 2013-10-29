@@ -13,17 +13,3 @@ if node['recipes'].include?('celery::scheduler') or node['recipes'].include?('ce
     cookbook 'celery'
   end
 end
-
-if node['recipes'].include?('celery::celerycam')
-  monitrc 'celerycam' do
-    source 'monit-celerycam.conf.erb'
-    cookbook 'celery'
-  end
-end
-
-if node['recipes'].include?('celery::celerymon')
-  monitrc 'celerymon' do
-    source 'monit-celerymon.conf.erb'
-    cookbook 'celery'
-  end
-end

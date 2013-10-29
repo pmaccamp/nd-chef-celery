@@ -12,7 +12,6 @@ Depends on the following cookbooks:
 ### Attributes
 
 `celery.version` - desired version of celery, defaults to nil (installs latest version)
-`celerymon.version` - desired version of celery, defaults to nil (installs latest version)
 
 ### Defintions
 
@@ -20,14 +19,12 @@ This cookbook provides the following definitions:
 
 * `celery_worker`
 * `celery_beat`
-* `celery_mon`
-* `celery_cam`
 
 Each definition configures an instance of a Celery process, managed by [supervisord](http://supervisord.org).
 
 All of these definitions accept optional parameters for `django`, `virtualenv` and `logfile`. The `django` and `virtualenv` parameters default to false, and the `logfile` will try to generate a reasonable default using `/var/log/celery` as the base path.
 
-The `celery_worker`, `celery_beat` and `celery_cam` definitions accept an `options` parameter which can be used to set command line flags that the processes are run with. The `celery_mon` definition does not accept this parameter.
+The `celery_worker`, `celery_beat` definitions accept an `options` parameter which can be used to set command line flags that the processes are run with. The `celery_mon` definition does not accept this parameter.
 
 ### Usage
 
@@ -53,17 +50,6 @@ celery_worker "myapp" do
 end
 
 celery_beat "myapp" do
-  django django_path
-  virtualenv virtualenv_path
-  options celery_opts
-end
-
-celery_mon "myapp" do
-  django django_path
-  virtualenv virtualenv_path
-end
-
-celery_cam "myapp" do
   django django_path
   virtualenv virtualenv_path
   options celery_opts

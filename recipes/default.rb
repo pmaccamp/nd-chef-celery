@@ -18,5 +18,5 @@
 #
 
 include_recipe "python"
-include_recipe "chef-supervisord"
+include_recipe "supervisor"
 
