@@ -70,7 +70,7 @@ define :celery_beat, :enable => true, :virtualenv => false, :startsecs => 10, :d
         stopwaitsecs params[:stopwaitsecs]
         numprocs 1
         priority 999
-        action :supervise
+        action :enable
       end
 
     when false

@@ -63,7 +63,7 @@ define :celery_worker, :enable => true, :virtualenv => false, :startsecs => 10, 
         startsecs params[:startsecs]
         stopwaitsecs params[:stopwaitsecs]
         priority 998
-        action :supervise
+        action :enable
       end
 
     when false
